@@ -1,7 +1,7 @@
 /**
  * CPSC 233 W24 Assignment 1 Starter to use to make Board.java
  * @author Jonathan Hudson
- * @email jwhudson@ucalgary.ca
+ * @ email jessica.truong1@ucalgary.ca , jwhudson@ucalgary.ca
  * @version 1.0
  */
 public class Board {
@@ -27,7 +27,7 @@ public class Board {
         board = new int[rows][columns];
         for (int x = 0; x < board.length - 1; x++) {
             for (int j = 0; j < columns; j++) {
-                board[x][j] = 0;
+                board[x][j] = EMP;
             }
         }
         return (board);
@@ -60,7 +60,7 @@ public class Board {
     //boolean or Boolean
     public static boolean canPlay(int[][] board, int column) {
             for (int j = 0; j < board.length-1; j++) {
-                if (board[j][column] == 0) {
+                if (board[j][column] == EMP) {
                     return (true);
                 }
                 else{
@@ -73,7 +73,7 @@ public class Board {
     public static int play(int[][] board, int column, int piece) {
         int [] arr = new int[8];
         for (int j = board.length - 1; j < board.length - 1 && j >= 0; j--) {
-            if (board[j][column] == 0) {
+            if (board[j][column] == EMP) {
                 board[j][column] = piece;
                 return j;
             }
@@ -85,7 +85,7 @@ public class Board {
     public static int removeLastPlay(int[][] board, int column) {
         for (int j = 0; j< board.length-1; j++){
             if (board[j][column] == 1 || board[j][column] == 2){
-                board[j][column] = 0;
+                board[j][column] = EMP;
                 return j;
             }
             else return -1;
@@ -156,24 +156,113 @@ public class Board {
             m = m+1;
             return false;
     }
-    private static boolean winInColumn(int[][] board, int col, int piece, int length) {
+    private static boolean winInColumn(int[][] board, int column, int piece, int length) {
+        //back to back squares
+        int k = 0;
+        int [] arr = new int[board.length];
+        for (int i = 0; i < board.length; i++) {
+            arr[i] = board[i][column];
+            if (board[i][column] == piece) {
+                    k = k + 1;
+                }
+            }
+        if (k >= piece) {
+            int r = 0;
+            while (r < board.length) {
+                if (board[r][column] == piece) {
+                    for (int i =1; i < length+1; i++){
+                        if (board[r][column+i] == piece){
+                            int l = 0;
+                        }
+                        else{
+                            return false;
+                        }
+                    }
+                    if (column == 0) {
+                        if (board[r][column + 1] == piece) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (column == board[0].length - 1) {
+                        if (board[r][column - 1] == piece) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (board[r][column - 1] == piece) {
+                        return true;
+                    } else if (board[r][column + 1] == piece) {
+                        return true;
+                    }
+                }
+                r = r + 1;
+            }
+            int j = board.length - 1;
+            while (j >= 0) {
+                if (board[j][column] == piece) {
+                    if (column == 0) {
+                        if (board[r][column + 1] == piece) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (column == board[0].length - 1) {
+                        if (board[j][column - 1] == piece) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (board[j][column - 1] == piece) {
+                        return true;
+                    } else if (board[j][column + 1] == piece) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        else{
+            return false;
+        }
+return false;
+    }
+
+    private static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
+        for (int i = 0; i < board.length; i++) {
+            int j = 0;
+            for (int z = -1; z < board[0].length; z++) {
+                if (board[i + z + 1][z + 1] == piece) {
+                    z++;
+                }
+            }
+            if (j <= piece) {
+                return false;
+            }
+        }
+        // check if the pieces are back to back
+        for (int l = 0; l < board.length; l++) {
+            for (int o = -1; o < board[0].length; l++) {
+                if (board[l + o + 1][o + 1] == piece) {
+                    for (int k =1; k<length+1; k++){
+                        if (board[l + o + 1 + k][o + 1+ k] == piece){
+                            int d = 0;
+                        }
+                        else return false;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+    private static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length) {
         return true;
     }
     public static int[] hint(int[][] board, int human, int length) {
         return(null);
     }
-
-
-
-
-    private static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
-        return true;
-    }
-    private static boolean winInDiagonalForwardSlash(int[][] board, int piece, int length) {
-        return true;
-    }
-
-
     //Students should enter their functions above here
     /**
      * Is there a win in given board in any row of board
