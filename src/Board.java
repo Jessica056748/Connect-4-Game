@@ -92,7 +92,7 @@ public class Board {
         }
         return -5;
     }
-    private static boolean full(int[][] board) {
+    public static boolean full(int[][] board) {
         int l = 0;
         for (int i = 0; i<=board.length-1; i++){
             for (int j = 0; j <board[0].length-1;j++){
@@ -106,7 +106,7 @@ public class Board {
         }
         return false;
     }
-    private static boolean winInRow(int[][] board, int row, int piece, int length) {
+    public static boolean winInRow(int[][] board, int row, int piece, int length) {
         int k = 0;
         int [] arr = new int[board[0].length];
         for(int i = 0; i<board[0].length; i++) {
@@ -156,7 +156,7 @@ public class Board {
             m = m+1;
             return false;
     }
-    private static boolean winInColumn(int[][] board, int column, int piece, int length) {
+    public static boolean winInColumn(int[][] board, int column, int piece, int length) {
         //back to back squares
         int k = 0;
         int [] arr = new int[board.length];
@@ -229,12 +229,14 @@ public class Board {
 return false;
     }
 
-    private static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
+    public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
+        int COLUMN = board.length;
+        int ROW = board[0].length;
         for (int i = 0; i < board.length; i++) {
             int j = 0;
             for (int z = -1; z < board[0].length; z++) {
                 if (board[i + z + 1][z + 1] == piece) {
-                    z++;
+                    j++;
                 }
             }
             if (j <= piece) {
@@ -245,9 +247,11 @@ return false;
         for (int l = 0; l < board.length; l++) {
             for (int o = -1; o < board[0].length; l++) {
                 if (board[l + o + 1][o + 1] == piece) {
+                    if ((l + o + 1) == COLUMN && (o+1) == ROW){
+                        return false;
+                    }
                     for (int k =1; k<length+1; k++){
                         if (board[l + o + 1 + k][o + 1+ k] == piece){
-                            int d = 0;
                         }
                         else return false;
                     }
@@ -255,9 +259,10 @@ return false;
             }
         }
 
+
         return false;
     }
-    private static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length) {
+    public static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length) {
         return true;
     }
     public static int[] hint(int[][] board, int human, int length) {
