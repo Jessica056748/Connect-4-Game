@@ -23,9 +23,8 @@ public class Board {
 
     public static int[][] createBoard(int rows, int columns) {
     //emp = 0???
-        int[][] board;
-        board = new int[rows][columns];
-        for (int x = 0; x < board.length - 1; x++) {
+        int [][] board = new int[rows][columns];
+        for (int x = 0; x < rows ; x++) {
             for (int j = 0; j < columns; j++) {
                 board[x][j] = EMP;
             }
@@ -33,25 +32,22 @@ public class Board {
         return (board);
     }
     public static int rowCount(int[][]board) {
-        int i = board.length;
-        return i;
+        int ROW = board.length;
+        return ROW;
     }
+
     public static int columnCount(int[][] board) {
-        int l = 0;
-        int[] j = board[0];
-        for (int x : j) {
-            l = l + 1;
-        }
-        return l;
+        int COLUMN = board[0].length;
+        return COLUMN;
     }
-    public static Boolean valid(int[][] board, int row, int column) {
+    public static boolean valid(int[][] board, int row, int column) {
         if (row < 0) {
             return (false);
         } else if (column < 0) {
             return (false);
-        } else if (row > board.length - 1) {
+        } else if (row > board.length) {
             return (false);
-        } else if (column > board[0].length-1) {
+        } else if (column > board[0].length) {
             return (false);
         } else {
             return (true);
@@ -59,52 +55,41 @@ public class Board {
     }
     //boolean or Boolean
     public static boolean canPlay(int[][] board, int column) {
-            for (int j = 0; j < board.length-1; j++) {
+            for (int j = 0; j < board.length; j++) {
                 if (board[j][column] == EMP) {
                     return (true);
                 }
-                else{
-                    return (false);
-                }
             }
-            return true;
+           return false;
     }
 
     public static int play(int[][] board, int column, int piece) {
-        int [] arr = new int[8];
-        for (int j = board.length - 1; j < board.length - 1 && j >= 0; j--) {
+        for (int j = board.length - 1; j >= 0; j--) {
             if (board[j][column] == EMP) {
                 board[j][column] = piece;
                 return j;
             }
-            else return -1;
         }
-        //need this???
-        return -5;
+        return -1;
     }
     public static int removeLastPlay(int[][] board, int column) {
-        for (int j = 0; j< board.length-1; j++){
+        for (int j = 0; j< board.length; j++){
             if (board[j][column] == 1 || board[j][column] == 2){
                 board[j][column] = EMP;
                 return j;
             }
-            else return -1;
         }
-        return -5;
+        return -1;
     }
     public static boolean full(int[][] board) {
-        int l = 0;
-        for (int i = 0; i<=board.length-1; i++){
-            for (int j = 0; j <board[0].length-1;j++){
-                if (board[i][j]==2 || board[i][j]==1){
-                    return true;
-                }
-                else {
+        for (int i = 0; i<=board.length; i++){
+            for (int j = 0; j <board[0].length;j++){
+                if (board[i][j]==EMP){
                     return false;
                 }
             }
         }
-        return false;
+        return true;
     }
     public static boolean winInRow(int[][] board, int row, int piece, int length) {
         int k = 0;
@@ -230,34 +215,28 @@ return false;
     }
 
     public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
-        int COLUMN = board.length;
-        int ROW = board[0].length;
-        for (int i = 0; i < board.length; i++) {
-            int j = 0;
-            for (int z = -1; z < board[0].length; z++) {
-                if (board[i + z + 1][z + 1] == piece) {
-                    j++;
-                }
-            }
-            if (j <= piece) {
-                return false;
-            }
-        }
-        // check if the pieces are back to back
-        for (int l = 0; l < board.length; l++) {
-            for (int o = -1; o < board[0].length; l++) {
-                if (board[l + o + 1][o + 1] == piece) {
-                    if ((l + o + 1) == COLUMN && (o+1) == ROW){
-                        return false;
-                    }
-                    for (int k =1; k<length+1; k++){
-                        if (board[l + o + 1 + k][o + 1+ k] == piece){
-                        }
-                        else return false;
-                    }
-                }
-            }
-        }
+//        int COLUMN = board.length;
+//        int ROW = board[0].length;
+//        // check if the pieces are back to back
+//        for (int l = 0; l < board.length-1; l++) {
+//            for (int o = -1; o < board[0].length-2; o++) {
+//                int count = 1;
+//                //add if its at the end
+//                if (board[l + o + 1][o + 1] == piece) {
+//                    int [][]arr = new int[5][2];
+//
+//                    count = count +1;
+//                    if (count == piece){
+//                    }
+//
+//                    for (int k =1; k<length+1; k++){
+//                        if (board[l + o + 1 + k][o + 1+ k] == piece){
+//                        }
+//                        else return false;
+//                    }
+//                }
+//            }
+
 
 
         return false;
