@@ -4,6 +4,7 @@
  * @ email jessica.truong1@ucalgary.ca , jwhudson@ucalgary.ca
  * @version 1.0
  */
+import java.util.Arrays;
 public class Board {
 
     /**
@@ -82,167 +83,352 @@ public class Board {
         return -1;
     }
     public static boolean full(int[][] board) {
-        for (int i = 0; i<=board.length; i++){
+        for (int i = 0; i<board.length; i++){
             for (int j = 0; j <board[0].length;j++){
                 if (board[i][j]==EMP){
                     return false;
                 }
+
             }
         }
         return true;
     }
     public static boolean winInRow(int[][] board, int row, int piece, int length) {
-        int k = 0;
-        int [] arr = new int[board[0].length];
-        for(int i = 0; i<board[0].length; i++) {
-            arr[i] = board[row][i];
-            if (board[row][i] == piece){
-                k = k+1;
-            }
-        }
-        int m =0;
-        if (k>=length) {
-            while (m < board.length) {
-                if (board[row][m] == piece) {
-                    if (board[row + 1][m] == piece) {
-                        m = board.length + 1;
-                        return true;
+        for (int j = 0; j < board[0].length; j++) {
+                int I = 0;
+                int NumberOfPieces = 1;
+                if (board[row][j] == piece) {
+                    if (row == board.length-1) {
+                        if (board[row-1][j] == piece){
+                            I++;
+                        }
+                    } else if (row == 0) {
+                        if (board[row+1][j] == piece){
+                            I++;
+                        }
+                    } else if (board[row+1][j] == piece) {
+                        I++;
+                    } else if (board[row-1][j] == piece) {
+                        I++;
                     }
-                    else if(board[row-1][m] == piece){
-                        m = board.length + 2;
-                        return true;
+                    for (int k = 0; k < board[0].length - j - 1 ; k++) {
+                        if (j+k == board[0].length -1){
+                            if (NumberOfPieces >= length) {
+                                if (row == board.length-1) {
+                                    if (board[row - 1][j + k] == piece) {
+                                            I++;
+                                        }
+                                    }
+                                else if (row == 0) {
+                                    if (board[row + 1][j + k] == piece) {
+                                            I++;
+                                        }
+                                        }
+
+                                else if (board[row + 1][j+k] == piece) {
+                                    return true;
+                                } else if (board[row - 1][j+k] == piece) {
+                                    return true;
+                                }  if (I > 0) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                        else if (board[row][j+k+1] == piece) {
+                            NumberOfPieces++;
+                        }
+
+                        else if (board[row][j + k+1] != piece) {
+                            if (NumberOfPieces < length) {
+                                return false;
+                            }
+                            else {
+
+                                if (row == board.length-1) {
+                                    if (board[row - 1][j + k] == piece) {
+                                        I++;
+                                    }
+                                }
+                                else if (row == 0) {
+                                    if (board[row + 1][j + k] == piece) {
+                                            I++;
+                                    }
+                                }
+                                else if (board[row + 1][j + k] == piece) {
+                                    return true;
+                                } else if (board[row - 1 ][j + k] == piece) {
+                                    return true;
+                                }
+                                if (I > 0){
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
-                m = m + 1;
             }
-        }
-        int l = board.length;
-        if (k>=length){
-            while (m <= board.length){
-                if (board[row][m] == piece) {
-                    if (board[row + 1][m] == piece) {
-                        m = board.length + 2;
-                        return true;
-                    }
-                    // make sure to account for -1 and over the column of the game board
-                    else if(board[row-1][m] == piece){
-                        m = board.length + 2;
-                        return true;
-                    }
-                }
-                m = m - 1;
-            }
-
-        }
-
-        else{
-                return false;
-            }
-            m = m+1;
-            return false;
+        return false;
     }
+
+
     public static boolean winInColumn(int[][] board, int column, int piece, int length) {
-        //back to back squares
-        int k = 0;
-        int [] arr = new int[board.length];
-        for (int i = 0; i < board.length; i++) {
-            arr[i] = board[i][column];
-            if (board[i][column] == piece) {
-                    k = k + 1;
+        for (int j = 0; j < board.length; j++) {
+            int I = 0;
+            int NumberOfPieces = 1;
+            if (board[j][column] == piece) {
+                if (column == board[0].length - 1) {
+                    if (board[j][column - 1] == piece) {
+                        I++;
+                    }
                 }
-            }
-        if (k >= piece) {
-            int r = 0;
-            while (r < board.length) {
-                if (board[r][column] == piece) {
-                    for (int i =1; i < length+1; i++){
-                        if (board[r][column+i] == piece){
-                            int l = 0;
+                else if (column == 0) {
+                    if (board[j][column + 1] == piece) {
+                        I++;
+                    }
+                }
+                else if (board[j][column + 1] == piece) {
+                    I++;
+                }
+                else if (board[j][column - 1] == piece) {
+                    I++;
+                }
+                for (int k = 0; k < board.length - j - 1; k++) {
+                    if (j + k == board.length - 1) {
+                        if (NumberOfPieces >= length) {
+                            if (column == board[0].length - 1) {
+                                if (board[j + k][column - 1] == piece) {
+                                    return true;
+                                }
+                            }
+                            else if (column == 0) {
+                                if (board[j + k][column + 1] == piece) {
+                                    return true;
+                                }
+                            }
+                            else if (board[j + k][column + 1] == piece) {
+                                return true;
+
+                            } else if (board[j + k][column - 1] == piece) {
+                                return true;
+                            }
+                            else if (I > 0) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
                         }
-                        else{
+                        else {
                             return false;
                         }
                     }
-                    if (column == 0) {
-                        if (board[r][column + 1] == piece) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else if (column == board[0].length - 1) {
-                        if (board[r][column - 1] == piece) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else if (board[r][column - 1] == piece) {
-                        return true;
-                    } else if (board[r][column + 1] == piece) {
-                        return true;
+                    else if (board[j + k + 1][column] == piece) {
+                        NumberOfPieces++;
                     }
-                }
-                r = r + 1;
-            }
-            int j = board.length - 1;
-            while (j >= 0) {
-                if (board[j][column] == piece) {
-                    if (column == 0) {
-                        if (board[r][column + 1] == piece) {
-                            return true;
-                        } else {
+                    else if (board[j + k + 1][column] != piece) {
+                        if (NumberOfPieces < length) {
                             return false;
                         }
-                    } else if (column == board[0].length - 1) {
-                        if (board[j][column - 1] == piece) {
-                            return true;
-                        } else {
-                            return false;
+                        else if (NumberOfPieces >= length){
+                            if (column == board[0].length - 1) {
+                                if (board[j + k][column - 1] == piece) {
+                                    return true;
+                                }
+                            }
+                            else if (column == 0) {
+                                if (board[j + k][column + 1] == piece) {
+                                    return true;
+                                }
+                            }
+                            else if (board[j + k][column + 1] == piece) {
+                                return true;
+                            }
+                            else if (board[j + k][column - 1] == piece) {
+                                return true;
+                            }
+                            else if (I > 0) {
+                                return true;
+                            }
+                            else return false;
                         }
-                    } else if (board[j][column - 1] == piece) {
-                        return true;
-                    } else if (board[j][column + 1] == piece) {
-                        return true;
-                    } else {
-                        return false;
                     }
                 }
             }
         }
-        else{
             return false;
-        }
-return false;
     }
-
     public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
-//        int COLUMN = board.length;
-//        int ROW = board[0].length;
-//        // check if the pieces are back to back
-//        for (int l = 0; l < board.length-1; l++) {
-//            for (int o = -1; o < board[0].length-2; o++) {
-//                int count = 1;
-//                //add if its at the end
-//                if (board[l + o + 1][o + 1] == piece) {
-//                    int [][]arr = new int[5][2];
-//
-//                    count = count +1;
-//                    if (count == piece){
-//                    }
-//
-//                    for (int k =1; k<length+1; k++){
-//                        if (board[l + o + 1 + k][o + 1+ k] == piece){
-//                        }
-//                        else return false;
-//                    }
-//                }
-//            }
+        for (int i = 0; i < board.length; i++) {
+            int PIECE = 1;
+            int I = 0;
+            for (int j = 0; j < board[0].length; j++) {
+                //Checks for the first L shape
+                if (board[i][j] == piece){
+                    if (i == 0) {
+                    }
+                    else if (i == board.length - 1) {
+                    }
+                    else if (j == 0) {
 
+                    }
+                    else if (j == board[0].length-1) {
 
-
+                    }
+                    else if (board[i - 1][j + 1] == piece){
+                        I++;
+                    }
+                    else if (board[i + 1][j - 1] == piece){
+                        I++;
+                    }
+                    int[] arr = new int[2];
+                    Arrays.sort(arr);
+                    for (int l = 0; l < arr[0] - i; i++){
+                        if (i+l == board.length-1 && j+l == board[0].length-1){
+                            if(I>0 && PIECE>= length){
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+                        }
+                        else if (i+l == board.length-1) {
+                            if (board[i+l - 1][j+l + 1] == piece && PIECE>= length){
+                                return true;
+                            }
+                            else if (I>0 && PIECE>= length){
+                                return true;
+                            }
+                            else return false;
+                        }
+                        else if (j+l == board[0].length-1) {
+                            if (board[i+l + 1][j+l - 1] == piece && PIECE>= length){
+                            return true;
+                            }
+                            else if (I>0 && PIECE>= length){
+                            return true;
+                            }
+                            else return false;
+                        }
+                        else if (board[i+l+1][j+l+1] == piece){
+                            PIECE++;
+                        }
+                        else if (board[i+l+1][j+l+1] != piece) {
+                            if (PIECE >= length) {
+                                if (board[i + l][j + l] == piece) {
+                                    //??
+                                    if (board[i + l + 1][j + l - 1] == piece) {
+                                        return true;
+                                    } else if (board[i + l - 1][j + l + 1] == piece) {
+                                        return true;
+                                    } else if (I > 0) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
     public static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length) {
-        return true;
+        for (int i = 0; i < board.length; i++) {
+            int PIECE = 1;
+            int I = 0;
+            for (int j = 0; j < board[0].length; j++) {
+                //Checks for the first L shape
+                if (board[i][j] == piece){
+                    if (i == 0) {
+                    }
+                    else if (i == board.length - 1) {
+                    }
+                    else if (j == 0) {
+
+                    }
+                    else if (j == board[0].length-1) {
+
+                    }
+                    else if (board[i - 1][j + 1] == piece){
+                        I++;
+                    }
+                    else if (board[i + 1][j - 1] == piece){
+                        I++;
+                    }
+                    int[] arr = new int[2];
+                    Arrays.sort(arr);
+
+                    for (int l = 0; l < arr[0] - i; i++){
+                        if (i+l == board.length-1 && j+l == board[0].length-1){
+                            if(I>0 && PIECE>= length){
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+                        }
+                        else if (i+l == board.length-1) {
+                            if (board[i+l - 1][j+l + 1] == piece && PIECE>= length){
+                                return true;
+                            }
+                            else if (I>0 && PIECE>= length){
+                                return true;
+                            }
+                            else return false;
+                        }
+                        else if (j+l == board[0].length-1) {
+                            if (board[i+l + 1][j+l - 1] == piece && PIECE>= length){
+                                return true;
+                            }
+                            else if (I>0 && PIECE>= length){
+                                return true;
+                            }
+                            else return false;
+                        }
+                        else if (board[i+l-1][j+l-1] == piece){
+                            PIECE++;
+                        }
+                        else if (board[i+l-1][j+l-1] != piece) {
+                            if (PIECE >= length) {
+                                if (board[i + l][j + l] == piece) {
+                                    //??
+                                    if (board[i + l + 1][j + l - 1] == piece) {
+                                        return true;
+                                    } else if (board[i + l - 1][j + l + 1] == piece) {
+                                        return true;
+                                    } else if (I > 0) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
     public static int[] hint(int[][] board, int human, int length) {
         return(null);

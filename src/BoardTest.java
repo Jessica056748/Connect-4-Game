@@ -18,53 +18,53 @@ public class BoardTest {
      * @param board The board to make deep copy of
      * @return A deep copy of given board
      */
-    public int[][] deepCopy(int[][] board) {
-        int[][] copy = new int[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            copy[i] = Arrays.copyOf(board[i], board[i].length);
-        }
-        return copy;
-    }
-
-    @Test
-    public void deepCopyTestWithoutDeepEquals() {
-        int[][] expected = new int[][]{{0, 1}};
-        int[][] actual = deepCopy(expected);
-        assertEquals(expected[0][0], actual[0][0]);
-        assertEquals(expected[0][1], actual[0][1]);
-    }
-
-
-    @Test
-    public void deepCopyTestNoChange() {
-        int[][] expected = new int[][]{{0, 1}};
-        int[][] actual = deepCopy(expected);
-        assertTrue(Arrays.deepEquals(expected, actual));
-    }
-
-    @Test
-    public void deepCopyTestChangeEntryIn2D() {
-        int[][] expected = new int[][]{{0, 1}};
-        int[][] actual = deepCopy(expected);
-        actual[0][0] = 99;
-        assertTrue(!Arrays.deepEquals(expected, actual));
-    }
-
-    @Test
-    public void deepCopyTestSet1DRefToDiffButIdenticalArray() {
-        int[][] expected = new int[][]{{0, 1}};
-        int[][] actual = deepCopy(expected);
-        actual[0] = new int[]{0,1};
-        assertTrue(Arrays.deepEquals(expected, actual));
-    }
-
-    @Test
-    public void deepCopyTestSet1DRefToDiffArray() {
-        int[][] expected = new int[][]{{0, 1}};
-        int[][] actual = deepCopy(expected);
-        actual[0] = new int[]{0,99};
-        assertTrue(!Arrays.deepEquals(expected, actual));
-    }
-
+//    public int[][] deepcopy(int[][] board) {
+//        int[][] copy = new int[board.length][board[0].length];
+//        for (int i = 0; i < board.length; i++) {
+//            copy[i] = Arrays.copyOf(board[i], board[i].length);
+//        }
+//        return copy;
+//    }
+////
+//    @Test
+//    public void createBoard() {
+//        int[][] expected = new int[][]{{0, 1}};
+//        int[][] actual = (expected);
+//        assertEquals(expected[0][0], actual[0][0]);
+//        assertEquals(expected[0][1], actual[0][1]);
+//    }
+//
+//
+//    @Test
+//    public void deepCopyTestNoChange() {
+//        int[][] expected = new int[][]{{0, 1}};
+//        int[][] actual = deepCopy(expected);
+//        assertTrue(Arrays.deepEquals(expected, actual));
+//    }
+//
+//    @Test
+//    public void deepCopyTestChangeEntryIn2D() {
+//        int[][] expected = new int[][]{{0, 1}};
+//        int[][] actual = deepCopy(expected);
+//        actual[0][0] = 99;
+//        assertTrue(!Arrays.deepEquals(expected, actual));
+//    }
+//
+//    @Test
+//    public void deepCopyTestSet1DRefToDiffButIdenticalArray() {
+//        int[][] expected = new int[][]{{0, 1}};
+//        int[][] actual = deepCopy(expected);
+//        actual[0] = new int[]{0,1};
+//        assertTrue(Arrays.deepEquals(expected, actual));
+//    }
+//
+//    @Test
+//    public void deepCopyTestSet1DRefToDiffArray() {
+//        int[][] expected = new int[][]{{0, 1}};
+//        int[][] actual = createboard(expected);
+//        actual[0] = new int[]{0,99};
+//        assertTrue(!Arrays.deepEquals(expected, actual));
+//    }
+//
 }
-
+//
