@@ -1,10 +1,11 @@
+import java.util.Arrays;
 /**
  * CPSC 233 W24 Assignment 1 Starter to use to make Board.java
  * @author Jonathan Hudson
  * @ email jessica.truong1@ucalgary.ca , jwhudson@ucalgary.ca
  * @version 1.0
  */
-import java.util.Arrays;
+
 public class Board {
 
     /**
@@ -22,7 +23,7 @@ public class Board {
 
     //Students should enter their functions below here
 
-    public static int[][] createBoard(int rows, int columns) {
+    public static int[][]createBoard(int rows, int columns) {
     //emp = 0???
         int [][] board = new int[rows][columns];
         for (int x = 0; x < rows ; x++) {
@@ -430,8 +431,22 @@ public class Board {
         }
         return false;
     }
-    public static int[] hint(int[][] board, int human, int length) {
-        return(null);
+    public static int[] hint(int[][] board, int piece, int length) {
+
+        for (int j = 0; j < board[0].length; j++){
+            if (canPlay(board,j) == true){
+                play(board,j,piece);
+                if (won(board,piece,length)){
+                    removeLastPlay(board,j);
+                    //Return the row and column hint for where to play the piece
+                }
+            }
+            else {
+                removeLastPlay(board,j);
+            }
+        }
+        int [] arr = {-1,-1};
+       return arr;
     }
     //Students should enter their functions above here
     /**
