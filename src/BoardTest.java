@@ -316,25 +316,27 @@ public class BoardTest {
         boolean actual = Board.winInRow(arr,0,1,3);
         assertEquals(expected,actual);
     }
+    //something wrong with the right side
     @Test
     public void winInRow3(){
         int [][] arr = {{1,1,1,1},{2,2,2,1},{1,2,2,2},{1,1,2,2}};
         boolean expected = true;
         boolean actual = Board.winInRow(arr,0,1,3);
         assertEquals(expected,actual);
+
     }
     @Test
     public void winInRow4(){
         int [][] arr = {{0,0,0,0,0},{1,1,0,2,1},{1,1,1,1,2},{2,2,2,2,2}};
         boolean expected = true;
-        boolean actual = Board.winInRow(arr,3,2,5);
+        boolean actual = Board.winInRow(arr,2,1,3);
         assertEquals(expected,actual);
     }
     @Test
     public void winInRow5(){
-        int [][] arr = {{0,0,0,0,0},{2,1,2,2,2},{2,1,1,1,1},{1,1,1,2,2}};
+        int [][] arr = {{0,0,0,0,0},{1,1,0,0,0},{1,1,1,1,1},{1,1,1,2,2}};
         boolean expected = true;
-        boolean actual = Board.winInRow(arr,2,1,3);
+        boolean actual = Board.winInRow(arr,3,1,3);
         assertEquals(expected,actual);
     }
     @Test
@@ -342,6 +344,13 @@ public class BoardTest {
         int [][] arr = {{0,0,1,0,0},{0,1,1,0,0},{0,2,2,2,2},{0,2,2,2,1}};
         boolean expected = true;
         boolean actual = Board.winInRow(arr,3,2,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInRow7(){
+        int [][] arr = {{0,0,1,0,0},{1,2,2,1,0},{2,1,1,1,0},{1,2,2,2,2}};
+        boolean expected = true;
+        boolean actual = Board.winInRow(arr,2,1,3);
         assertEquals(expected,actual);
     }
 

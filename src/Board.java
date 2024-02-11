@@ -22,7 +22,10 @@ public class Board {
     public static final int BLU = Game.BLU;
 
     //Students should enter their functions below here
-
+    /**
+     * createBoard function through taking in the number of rows and columns
+     * and then using that to generate a 2D array while inputting EMP at each location
+     */
     public static int[][]createBoard(int rows, int columns) {
     //emp = 0???
         int [][] board = new int[rows][columns];
@@ -33,29 +36,45 @@ public class Board {
         }
         return (board);
     }
+    /**
+     * rowCount function that takes in a 2D array board and determining
+     * the length of the board which is the length of the board and then returning that
+     */
     public static int rowCount(int[][]board) {
         int ROW = board.length;
         return ROW;
     }
-
+    /**
+     * columnCount function that takes in a 2D array board and determining the number
+     * of columns by determining the length of the first row
+     * which would give the length of the column and then returning the number of columns
+     */
     public static int columnCount(int[][] board) {
         int COLUMN = board[0].length;
         return COLUMN;
     }
+    /**
+     * valid function looks at the inputted row and column values that outputs false if the
+     * values are less than 0 and if the values inputted are less than the values of the
+     * board size and then returning true or false depending on if the input values are possible
+     */
     public static boolean valid(int[][] board, int row, int column) {
         if (row < 0) {
             return (false);
         } else if (column < 0) {
             return (false);
-        } else if (row > board.length) {
+        } else if (row > board.length-1) {
             return (false);
-        } else if (column > board[0].length) {
+        } else if (column > board[0].length-1) {
             return (false);
         } else {
             return (true);
         }
     }
-    //boolean or Boolean
+    /**
+     * canPlay function determines if there are empty spaces in the inputted column and then
+     * outputing true or false depending on if it is possible
+     */
     public static boolean canPlay(int[][] board, int column) {
             for (int j = 0; j < board.length; j++) {
                 if (board[j][column] == EMP) {
@@ -64,7 +83,11 @@ public class Board {
             }
            return false;
     }
-
+    /**
+     * play function that takes the piece and column inputted and adds the piece to the
+     * indicated column at the next avalible spot in the column by replacing EMP with the piece
+     * then it returns the index of the row where it was placed
+     */
     public static int play(int[][] board, int column, int piece) {
         for (int j = board.length - 1; j >= 0; j--) {
             if (board[j][column] == EMP) {
@@ -74,6 +97,10 @@ public class Board {
         }
         return -1;
     }
+    /**
+     * removeLastPlay function removes the highest piece/ last piece played in the indicated column
+     * by replacing the piece with EMP
+     */
     public static int removeLastPlay(int[][] board, int column) {
         for (int j = 0; j< board.length; j++){
             if (board[j][column] == 1 || board[j][column] == 2){
@@ -83,6 +110,11 @@ public class Board {
         }
         return -1;
     }
+    /**
+     * full function checks if the board is full through a for loop of the row and a for loop within
+     * for column which will check at each spot if there is an EMP otherwise return false to indicate
+     * that the board is full
+     */
     public static boolean full(int[][] board) {
         for (int i = 0; i<board.length; i++){
             for (int j = 0; j <board[0].length;j++){
@@ -93,7 +125,14 @@ public class Board {
             }
         }
         return true;
+
     }
+    /**
+     * winInRow function checks at the indicated row to see if the indicated piece has
+     * in a row that adds up to at least the length indicated. It then checks to see if that colored piece
+     * with the length needed created an L this would return true, otherwise it would return false
+     *
+     * */
     public static boolean winInRow(int[][] board, int row, int piece, int length) {
         for (int j = 0; j < board[0].length; j++) {
                 int I = 0;
@@ -103,50 +142,59 @@ public class Board {
                         if (board[row-1][j] == piece){
                             I++;
                         }
-                    } else if (row == 0) {
+                    }
+                    else if (row == 0) {
                         if (board[row+1][j] == piece){
                             I++;
                         }
-                    } else if (board[row+1][j] == piece) {
+                    }
+                    else if (board[row+1][j] == piece) {
                         I++;
-                    } else if (board[row-1][j] == piece) {
+                    }
+                    else if (board[row-1][j] == piece) {
                         I++;
                     }
                     for (int k = 0; k < board[0].length - j - 1 ; k++) {
                         if (j+k == board[0].length -1){
                             if (NumberOfPieces >= length) {
                                 if (row == board.length-1) {
+                                    System.out.println("12");
                                     if (board[row - 1][j + k] == piece) {
-                                            I++;
-                                        }
-                                    }
+                                            return true;}
+                                    else {
+                                        System.out.println("0");
+                                        return false;
+                                    }}
                                 else if (row == 0) {
+                                    System.out.println("12");
                                     if (board[row + 1][j + k] == piece) {
-                                            I++;
-                                        }
-                                        }
-
+                                            return true;}
+                                    else {
+                                        System.out.println("1");
+                                        return false;
+                                    }}
                                 else if (board[row + 1][j+k] == piece) {
-                                    return true;
-                                } else if (board[row - 1][j+k] == piece) {
-                                    return true;
-                                }  if (I > 0) {
-                                    return true;
-                                }
+                                    return true;}
+                                else if (board[row - 1][j+k] == piece) {
+                                    return true;}
+                                else if (I>0){
+                                    return true;}
                                 else {
+                                    System.out.println("2");
                                     return false;
                                 }
                             }
                             else {
+                                System.out.println("3");
                                 return false;
                             }
                         }
                         else if (board[row][j+k+1] == piece) {
                             NumberOfPieces++;
                         }
-
                         else if (board[row][j + k+1] != piece) {
                             if (NumberOfPieces < length) {
+                                System.out.println("4");
                                 return false;
                             }
                             else {
@@ -174,10 +222,15 @@ public class Board {
                     }
                 }
             }
+        System.out.println("5");
         return false;
     }
 
-
+    /**
+     * winInColumn function checks in the indicated column if there are the piece indiciated
+     * in a row that adds up to at least the inputted length. If it does, then it will check if those
+     * pieces in a row make an L, this will return true, otherwise false
+     */
     public static boolean winInColumn(int[][] board, int column, int piece, int length) {
         for (int j = 0; j < board.length; j++) {
             int I = 0;
@@ -264,6 +317,11 @@ public class Board {
         }
             return false;
     }
+    /**
+     * winInDiagonalBackslashfunction checks to see if there is any backslash diagonal win by looking for
+     * the inputted piece in a row that is at least the length indicated. then it will look
+     * an "L" in the pieces that were in a row where if it does, then it will return true
+     */
     public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
         for (int i = 0; i < board.length; i++) {
             int PIECE = 1;
@@ -347,6 +405,11 @@ public class Board {
         }
         return false;
     }
+    /**
+     * winInDiagonalForwardslashfunction checks to see if there is any forward diagonal win by looking for
+     * the inputted piece in a row that is at least the length indicated. then it will look
+     * an "L" in the pieces that were in a row, it will return true if this is met
+     */
     public static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length) {
         for (int i = 0; i < board.length; i++) {
             int PIECE = 1;
@@ -431,6 +494,9 @@ public class Board {
         }
         return false;
     }
+    /**
+     * hint function lets the user
+     */
     public static int[] hint(int[][] board, int piece, int length) {
 
         for (int j = 0; j < board[0].length; j++){
