@@ -27,8 +27,9 @@ import java.util.*;
  * To complete this game a student will complete Board.java for the game to operate correctly,
  * as well as BoardTest.java to test the functions required.
  *
- * @author Jonathan Hudson
- * @email jwhudson@ucalgary.ca
+ * @author Jessica Truong, Jonathan Hudson
+ * @email jessica.truong1@ucalgary.ca, jwhudson@ucalgary.ca
+ * Tutorial 15
  * @version 1.0
  */
 public class Game extends Canvas {

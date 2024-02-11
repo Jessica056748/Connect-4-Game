@@ -1,8 +1,9 @@
 import java.util.Arrays;
 /**
- * CPSC 233 W24 Assignment 1 Starter to use to make Board.java
- * @author Jonathan Hudson
+ * CPSC 233 W24 Assignment 1 February 10 2024
+ * @author Jessica Truong, Jonathan Hudson
  * @ email jessica.truong1@ucalgary.ca , jwhudson@ucalgary.ca
+ * Tutorial 15
  * @version 1.0
  */
 
@@ -138,41 +139,30 @@ public class Board {
                 int I = 0;
                 int NumberOfPieces = 1;
                 if (board[row][j] == piece) {
+                    //if the row is at the end
                     if (row == board.length-1) {
                         if (board[row-1][j] == piece){
-                            I++;
-                        }
-                    }
+                            I++;}}
                     else if (row == 0) {
                         if (board[row+1][j] == piece){
-                            I++;
-                        }
-                    }
+                            I++;}}
                     else if (board[row+1][j] == piece) {
-                        I++;
-                    }
+                        I++;}
                     else if (board[row-1][j] == piece) {
-                        I++;
-                    }
+                        I++;}
                     for (int k = 0; k < board[0].length - j - 1 ; k++) {
                         if (j+k == board[0].length -1){
                             if (NumberOfPieces >= length) {
                                 if (row == board.length-1) {
-                                    System.out.println("12");
                                     if (board[row - 1][j + k] == piece) {
                                             return true;}
                                     else {
-                                        System.out.println("0");
-                                        return false;
-                                    }}
+                                        return false;}}
                                 else if (row == 0) {
-                                    System.out.println("12");
                                     if (board[row + 1][j + k] == piece) {
                                             return true;}
                                     else {
-                                        System.out.println("1");
-                                        return false;
-                                    }}
+                                        return false;}}
                                 else if (board[row + 1][j+k] == piece) {
                                     return true;}
                                 else if (board[row - 1][j+k] == piece) {
@@ -180,40 +170,25 @@ public class Board {
                                 else if (I>0){
                                     return true;}
                                 else {
-                                    System.out.println("2");
-                                    return false;
-                                }
-                            }
+                                    return false;}}
                             else {
-                                System.out.println("3");
-                                return false;
-                            }
-                        }
+                                return false;}}
                         else if (board[row][j+k+1] == piece) {
-                            NumberOfPieces++;
-                        }
+                            NumberOfPieces++;}
                         else if (board[row][j + k+1] != piece) {
                             if (NumberOfPieces < length) {
-                                System.out.println("4");
-                                return false;
-                            }
+                                return false;}
                             else {
-
                                 if (row == board.length-1) {
                                     if (board[row - 1][j + k] == piece) {
-                                        I++;
-                                    }
-                                }
+                                        I++;}}
                                 else if (row == 0) {
                                     if (board[row + 1][j + k] == piece) {
-                                            I++;
-                                    }
-                                }
+                                            I++;}}
                                 else if (board[row + 1][j + k] == piece) {
-                                    return true;
-                                } else if (board[row - 1 ][j + k] == piece) {
-                                    return true;
-                                }
+                                    return true;}
+                                else if (board[row - 1 ][j + k] == piece) {
+                                    return true;}
                                 if (I > 0){
                                     return true;
                                 }
@@ -222,7 +197,6 @@ public class Board {
                     }
                 }
             }
-        System.out.println("5");
         return false;
     }
 
@@ -330,14 +304,26 @@ public class Board {
                 //Checks for the first L shape
                 if (board[i][j] == piece){
                     if (i == 0) {
+                        if(j==0){
+                        }
+                        else if (j == board[0].length-1){
+                        }
+                        else if (board[i+1][j-1] == piece){
+                            I++;
+                        }
                     }
                     else if (i == board.length - 1) {
                     }
                     else if (j == 0) {
-
+                        if(i==0){
+                        }
+                        else if (i == board.length-1){
+                        }
+                        else if (board[i-1][j+1] == piece){
+                            I++;
+                        }
                     }
                     else if (j == board[0].length-1) {
-
                     }
                     else if (board[i - 1][j + 1] == piece){
                         I++;
