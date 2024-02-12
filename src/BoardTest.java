@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * CPSC 233 W24 Assignment 1 BoardTest Starter File
  * Holds a helper deep copy and example tests of deep copy
@@ -28,26 +28,26 @@ public class BoardTest {
     public void testcreateBoardRow() {
         int[][] expected = new int[5][4];
         int[][] actual = Board.createBoard(5,4);
-        Arrays.deepEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     public void testcreateBoardMaximum() {
         int[][] expected = new int[8][8];
         int[][] actual = Board.createBoard(8,8);
-        Arrays.deepEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
     @Test
     public void testcreateBoardMinimum() {
         int[][] expected = new int[4][4];
         int[][] actual = Board.createBoard(4,4);
-        Arrays.deepEquals(expected,actual);
+        assertArrayEquals(expected,actual);
     }
     @Test
     public void testcreateBoardColumn() {
         int[][] expected = new int[3][6];
         int[][] actual = Board.createBoard(3,3);
-        Arrays.deepEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
     @Test
     public void testrowCount() {
@@ -319,11 +319,10 @@ public class BoardTest {
     //something wrong with the right side
     @Test
     public void winInRow3(){
-        int [][] arr = {{1,1,1,1},{2,2,2,1},{1,2,2,2},{1,1,2,2}};
+        int [][] arr = {{0,0,0,0},{0,1,2,2},{2,2,2,1},{1,1,1,1}};
         boolean expected = true;
-        boolean actual = Board.winInRow(arr,0,1,3);
-        assertEquals(expected,actual);
-
+        boolean actual = Board.winInRow(arr,3,1,3);
+        assertEquals(expected, actual);
     }
     @Test
     public void winInRow4(){
@@ -354,7 +353,214 @@ public class BoardTest {
         assertEquals(expected,actual);
     }
 
+    @Test
+    public void winInColumn1(){
+        int [][] arr = {{0,0,1,0,0},{1,2,2,1,0},{1,1,1,1,0},{1,1,1,2,2}};
+        boolean expected = true;
+        boolean actual = Board.winInColumn(arr,0,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInColumn2(){
+        int [][] arr = {{0,0,0,0,1},{1,2,2,1,1},{2,1,2,1,1},{1,1,1,2,2}};
+        boolean expected = true;
+        boolean actual = Board.winInColumn(arr,4,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInColumn3(){
+        int [][] arr = {{0,2,0,0,1},{0,2,0,0,2},{1,2,1,1,1},{1,2,2,2,1},{1,1,1,2,2},{1,1,2,2,1},{2,2,1,2,1}};
+        boolean expected = true;
+        boolean actual = Board.winInColumn(arr,1,2,3);
+        assertEquals(expected,actual);
+    }
 
+    @Test
+    public void winInColumn4(){
+        int [][] arr = {{0,1,1,1,1},{0,1,0,0,2},{2,1,2,2,1}, {2,1,2,1,1}};
+        boolean expected = true;
+        boolean actual = Board.winInColumn(arr,1,1,3);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void winInColumn5(){
+        int [][] arr = {{0,1,1,2,2},{2,1,1,1,2},{1,1,1,2,2},{2,1,2,2,1},{2,1,2,1,1},{2,1,2,1,1}};
+        boolean expected = true;
+        boolean actual = Board.winInColumn(arr,2,1,3);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void winInBackslash(){
+        int [][] arr = {{0,2,1,0,0},
+                        {0,1,2,1,2},
+                        {1,1,1,2,1},
+                        {2,1,2,1,1},
+                        {2,1,2,1,1},
+                        {2,1,2,1,1}};
+        boolean expected = false;
+        boolean actual = Board.winInDiagonalBackslash(arr,2,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInBackslash2(){
+        int [][] arr = {{0,1,0,0,0},
+                        {1,2,2,0,2},
+                        {1,1,2,2,2},
+                        {2,1,1,0,1}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInBackslash3(){
+        int [][] arr = {{0,0,0,0,0},
+                        {0,1,2,0,2},
+                        {1,2,1,2,2},
+                        {2,1,2,1,1}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInBackslash4(){
+        int [][] arr = {{1,2,0,0,0},
+                        {2,0,0,0,0},
+                        {1,2,1,2,2},
+                        {2,1,2,1,1},
+                        {2,1,2,2,1},
+                        {2,1,2,1,2},
+                        {2,1,2,1,1}};
+        boolean expected = false;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void winInBackslash5(){
+        int [][] arr = {{1,0,1,0,0,0},
+                        {0,1,2,1,2,0},
+                        {1,2,1,2,2,0},
+                        {2,1,2,1,1,0},
+                        {2,1,2,1,1,0}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void wininforwardslash1(){
+        int [][] arr = {{0,0,0,0,0},
+                        {0,0,0,1,0},
+                        {0,0,1,2,0},
+                        {0,1,2,1,0},
+                        {1,2,2,1,0},
+                        {1,1,2,2,0}};
+        boolean expected = false;
+        boolean actual = Board.winInDiagonalForwardSlash(arr,2,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void wininforwardslash2(){
+        int [][] arr = {{0,0,1,0},
+                        {0,0,2,1},
+                        {2,2,1,0},
+                        {1,1,2,2}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalForwardSlash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void wininforwardslash3(){
+        int [][] arr = {{0,0,2,0,2,0},
+                        {0,0,1,2,0,2},
+                        {0,2,2,1,2,0},
+                        {1,2,1,2,0,1},
+                        {1,2,1,2,0,1},
+                        {1,2,1,2,0,1}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalForwardSlash(arr,2,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void wininforwardslash4(){
+        int [][] arr = {{0,0,2,0,0,0,0},
+                        {0,0,1,2,0,0,0},
+                        {0,2,2,1,0,0,0},
+                        {1,2,1,0,0,1,2},
+                        {1,1,1,0,0,1,1}};
+        boolean expected = false;
+        boolean actual = Board.winInDiagonalForwardSlash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void wininforwardslash5(){
+        int [][] arr = {{0,0,2,0,0,0,0},
+                        {0,0,1,2,0,0,1},
+                        {0,2,2,1,0,1,0},
+                        {1,2,1,0,1,0,2},
+                        {1,1,1,0,0,0,1}};
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalForwardSlash(arr,1,3);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void hint1(){
+        int [][] arr = {{0,0,0,0,0},
+                        {0,0,0,0,2},
+                        {0,1,0,0,0},
+                        {2,1,2,1,2},
+                        {2,1,2,1,2},
+                        {2,2,2,1,2}};
+        int [] expected = {2,0};
+        int[] actual = Board.hint(arr,1,3);
+        assertArrayEquals(expected,actual);
+    }
+    @Test
+    public void hint2(){
+        int [][] arr = {{0,0,0,0,0,0},
+                        {0,0,2,2,2,0},
+                        {1,1,1,1,1,0},
+                        {2,1,2,1,2,0}};
+        int [] expected = {0,2};
+        int[] actual = Board.hint(arr,2,3);
+        assertArrayEquals(expected,actual);
+    }
+
+    @Test
+    public void hint3(){
+        int [][] arr = {{0,2,1,0,1,0},
+                        {1,1,2,2,2,0},
+                        {1,1,1,1,1,0},
+                        {2,1,2,1,2,0}};
+        int [] expected = {-1,-1};
+        int[] actual = Board.hint(arr,2,3);
+        assertArrayEquals(expected,actual);
+    }
+    @Test
+    public void hintfull4(){
+        int [][] arr = {{2,1,1,1,},
+                        {1,1,2,2},
+                        {1,2,1,2},
+                        {2,1,2,1},
+                        {2,1,2,1}};
+        int [] expected = {-1,-1};
+        int[] actual = Board.hint(arr,1,4);
+        assertArrayEquals(expected,actual);
+    }
+    @Test
+    public void hintempty5(){
+        int [][] arr = {{0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0}};
+        int [] expected = {-1,-1};
+        int[] actual = Board.hint(arr,2,3);
+        assertArrayEquals(expected,actual);
+    }
 
 
     @Test
