@@ -3,7 +3,7 @@ import java.util.Arrays;
  * CPSC 233 W24 Assignment 1 February 10 2024
  * @author Jessica Truong, Jonathan Hudson
  * @ email jessica.truong1@ucalgary.ca , jwhudson@ucalgary.ca
- * Tutorial 15
+ * February 2 2024, Tutorial 15
  * @version 1.0
  */
 
@@ -25,7 +25,7 @@ public class Board {
     //Students should enter their functions below here
 
     /**
-     * createBoard function through taking in the number of rows and columns
+     * createBoard function by taking in the number of rows and columns from user
      * and then using that to generate a 2D array while inputting EMP at each location
      */
     public static int[][] createBoard(int rows, int columns) {
@@ -44,8 +44,7 @@ public class Board {
      * the length of the board which is the length of the board and then returning that
      */
     public static int rowCount(int[][] board) {
-        int ROW = board.length;
-        return ROW;
+        return board.length;
     }
 
     /**
@@ -55,8 +54,7 @@ public class Board {
      */
     public static int columnCount(int[][] board) {
         //finding the length of a column using the length of row 0
-        int COLUMN = board[0].length;
-        return COLUMN;
+        return board[0].length;
     }
 
     /**
@@ -99,12 +97,11 @@ public class Board {
      * then it returns the index of the row where it was placed
      */
     public static int play(int[][] board, int column, int piece) {
-        // j is for the rows
         //for loop looking for an EMP spot, in the column starting at the bottom working upwards
-        for (int j = board.length - 1; j >= 0; j--) {
-            if (board[j][column] == EMP) {
-                board[j][column] = piece;
-                return j;
+        for (int row = board.length - 1; row >= 0; row--) {
+            if (board[row][column] == EMP) {
+                board[row][column] = piece;
+                return row;
             }
         }
         return -1;
@@ -323,88 +320,97 @@ public class Board {
      */
     public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
         for (int i = 0; i < board.length; i++) {
-            // PIECE counts the number of 1 or 2 that are consecutive
-            int PIECE = 1;
-            //I checks for when there is the short side of the L at the first position of piece found
-
-            int I = 0;
-            // for loop with j has the column to check each column
-
             for (int j = 0; j < board[0].length; j++) {
+                // PIECE counts the number of 1 or 2 that are consecutive
+                int PIECE = 1;
+                //I checks for when there is the short side of the L at the first position of piece found
+                int I = 0;
+                // for loop with j has the column to check each column
                 //Checks for the first L shape
-                if (board[i][j] == piece){
+                if (board[i][j] == piece) {
+                    //if else Checks for the first short side of L shape where it adds one to I if found
+                    // eliminates doing anything for the 4 corner coordinates
                     if (i == 0) {
-                    }
+                        if (j == 0 || j == board[0].length-1){
+                        }
+                        else if (board[i + 1][j - 1] == piece) {
+                                I++;
+                            }
+                        }
                     else if (i == board.length - 1) {
-                    }
-                    else if (j == 0) {
-
+                        if (j == 0 || j == board[0].length - 1) {
+                        }
+                        else if (board[i - 1][j + 1] == piece) {
+                            I++;
+                        }
                     }
                     else if (j == board[0].length-1) {
+                             if (board[i + 1][j - 1] == piece) {
+                                 I++;
+                             }
+                         }
+                    else if (j ==0){
+                        if (board[i - 1][j + 1] == piece) {
+                            I++;
+                        }
+                    }
+                    else if (board[i + 1][j - 1] == piece) {
+                            I++;
+                        }
 
-                    }
-                    else if (board[i - 1][j + 1] == piece){
-                        I++;
-                    }
-                    else if (board[i + 1][j - 1] == piece){
-                        I++;
-                    }
-                    //arr to find the shortest side of row or column, then this would be where it needs to stop for the for loop
-                    int [] arr= new int[2];
+                    else if (board[i - 1][j + 1] == piece) {
+                            I++;
+                        }
+                        //arr to find the shortest side of row or column, then this would be where it needs to stop for the for loop
+                    int[] arr = {board.length, board[0].length};
                     Arrays.sort(arr);
-                    //for statement to find the consecutive piece and checking for short side of L when the next spot is not the same piece
-                    for (int l = 0; l < arr[0] - i; i++){
-                        if (i+l == board.length-1 && j+l == board[0].length-1){
-                            if(I>0 && PIECE>= length){
-                                return true;
-                            }
-                            else{
-                                return false;
-                            }
-                        }
-                        else if (i+l == board.length-1) {
-                            if (board[i+l - 1][j+l + 1] == piece && PIECE>= length){
-                                return true;
-                            }
-                            else if (I>0 && PIECE>= length){
-                                return true;
-                            }
-                            else return false;
-                        }
-                        else if (j+l == board[0].length-1) {
-                            if (board[i+l + 1][j+l - 1] == piece && PIECE>= length){
-                                return true;
-                            }
-                            else if (I>0 && PIECE>= length){
-                                return true;
-                            }
-                            else return false;
-                        }
-                        else if (board[i+l+1][j+l+1] == piece){
-                            PIECE++;
-                        }
-                        else if (board[i+l+1][j+l+1] != piece) {
-                            if (PIECE >= length) {
-                                if (board[i + l][j + l] == piece) {
-                                    if (board[i + l + 1][j + l - 1] == piece) {
+
+                    //for loop to find the consecutive pieces and checking for short side of L when the next spot is not the same piece
+                    // if statements to eliminate those two sids because they would not be able to form a diagonal with those starting pieces
+                    if (i != board.length-1) {
+                        if (j != board[0].length-1) {
+                            int[]shortestLength = {i,j};
+                            Arrays.sort(shortestLength);
+                            //counter to go up
+                            for(int l = 0; l< arr[0]-shortestLength[1] ; l++) {
+                                //checks the spot to see if it is at the end
+                                if (j + l == board[0].length - 1) {
+                                    if (I > 0 && PIECE >= length) {
                                         return true;
-                                    } else if (board[i + l - 1][j + l + 1] == piece) {
+                                    } else if (i == 0 && j == 0) {
+
+                                    } else if (board[i + 1][j - 1] == piece) {
+                                        if (PIECE >= length) {
+                                            return true;
+                                        }
+                                    }
+                                } else if (i + l == board.length - 1) {
+                                    if (board[i + l - 1][j + l + 1] == piece && PIECE >= length) {
                                         return true;
-                                    } else if (I > 0) {
+                                    } else if (I > 0 && PIECE >= length) {
                                         return true;
-                                    } else {
-                                        return false;
                                     }
                                 }
-                                else {
-                                    return false;
+                                else if (board[i + l + 1][j + l + 1] == piece) {
+                                    PIECE++;
+
+                                } else if (board[i + l + 1][j + l + 1] != piece) {
+                                    if (PIECE >= length) {
+                                        if (board[i + l][j + l] == piece) {
+                                            if (board[i + l + 1][j + l - 1] == piece) {
+                                                return true;
+                                            } else if (board[i + l - 1][j + l + 1] == piece) {
+                                                return true;
+                                            } else if (I > 0) {
+                                                return true;
+                                            }
+                                        }
+                                    }
                                 }
-                            }
-                            else {
-                                return false;
                             }
                         }
                     }
+
                 }
             }
         }
@@ -416,7 +422,6 @@ public class Board {
      * an "L" in the pieces that were in a row, it will return true if this is met
      */
     public static boolean winInDiagonalForwardSlash(int[][] board, int piece, int length) {
-        //for loop with i being rows , to check for piece in each row
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 // PIECE counts the number of 1 or 2 that are consecutive
@@ -424,101 +429,122 @@ public class Board {
                 //I checks for when there is the short side of the L at the first position of piece found
                 int I = 0;
                 // for loop with j has the column to check each column
-                if (board[i][j] == piece){
+                //Checks for the first L shape
+                if (board[i][j] == piece) {
                     //if else Checks for the first short side of L shape where it adds one to I if found
+                    // eliminates doing anything for the 4 corner coordinates
                     if (i == 0) {
-                        if(j==0){
+                        if (j == 0 || j == board[0].length-1){
                         }
-                        else if (j == board[0].length-1){
-                        }
-                        else if (board[i+1][j+1] == piece){
+                        else if (board[i + 1][j + 1] == piece) {
                             I++;
                         }
                     }
                     else if (i == board.length - 1) {
-                    }
-                    else if (j == 0) {
-                        if(i==0){
+                        if (j == 0 || j == board[0].length - 1) {
                         }
-                        else if (i == board.length-1){
-                        }
-                        else if (board[i+1][j+1] == piece){
-                            I++;
-                        }
+//                        else if (board[i -  1][j - 1] == piece) {
+//                            I++;
+//                        }
                     }
                     else if (j == board[0].length-1) {
-                        if (board[i - 1][j - 1] == piece){
+                        if (board[i - 1][j - 1] == piece) {
                             I++;
                         }
                     }
-                    else if (board[i + 1][j + 1] == piece){
+//                    else if (j ==0){
+//                        if (board[i + 1][j + 1] == piece) {
+//                            I++;
+//                        }
+//                    }
+                    else if (board[i - 1][j - 1] == piece) {
                         I++;
                     }
-                    else if (board[i - 1][j - 1] == piece){
+
+                    else if (board[i + 1][j + 1] == piece) {
                         I++;
                     }
                     //arr to find the shortest side of row or column, then this would be where it needs to stop for the for loop
-                    int[] arr = {board.length , board[0].length};
+                    int[] arr = {board.length, board[0].length};
                     Arrays.sort(arr);
-                    //for statement to find the consecutive piece and checking for short side of L when the next spot is not the same piece
-                    for (int l = 0; l < arr[0] - i; i++){
-                        if (i+l == board.length-1 && j+l == board[0].length-1){
-                            if(I>0 && PIECE>= length){
-                                return true;
-                            }
-                            else{
-                                return false;
-                            }
-                        }
-                        else if (i+l == board.length-1) {
-                            if (board[i+l - 1][j+l - 1] == piece && PIECE>= length){
-                                return true;
-                            }
-                            else if (I>0 && PIECE>= length){
-                                return true;
-                            }
-                            else return false;
-                        }
-                        else if (j+l == board[0].length-1) {
-                            if (board[i+l + 1][j+l - 1] == piece && PIECE>= length){
-                            return true;
-                            }
-                            else if (I>0 && PIECE>= length){
-                            return true;
-                            }
-                            else return false;
-                        }
-                        else if (board[i+l+1][j+l+1] == piece){
-                            PIECE++;
-                        }
-                        else if (board[i+l+1][j+l+1] != piece) {
-                            if (PIECE >= length) {
-                                if (board[i + l][j + l] == piece) {
-                                    if (board[i + l + 1][j + l - 1] == piece) {
-                                        return true;
-                                    } else if (board[i + l - 1][j + l + 1] == piece) {
-                                        return true;
-                                    } else if (I > 0) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                }
-                                else {
-                                    return false;
-                                }
+
+                    //for loop to find the consecutive pieces and checking for short side of L when the next spot and also when the next piece is not the same piece
+                    // if statements to eliminate those two sids because they would not be able to form a diagonal with those starting pieces
+                    if (i != board.length-1) {
+                        if (j != 0) {
+                            int[]shortestLength = {i,j};
+
+                            //used to create the range for the for loop
+                            int middlePoint;
+                            int k = arr[0]/2;
+
+                            if (k ==0){
+                                middlePoint = arr[0];
                             }
                             else {
-                                return false;
+                                middlePoint = k;
+                            }
+                            int boardRange = 0;
+                            if (i>=middlePoint) {
+                            boardRange = i;
+                            }
+                            else if(i<middlePoint) {
+                                boardRange = middlePoint;
+                            }
+
+                            for (int l = 0; l<boardRange-shortestLength[1]; l++){
+                                //checks the spot to see if it is at the end
+                                if (j - l == 0) {
+                                    if (I > 0 && PIECE >= length) {
+                                        return true;
+                                    }
+                                    else if (i+l == board.length-1) {
+                                        if (I > 0 && PIECE >= length) {
+                                            return true;
+                                        }
+                                    }
+                                    //is this right??
+                                    else if (board[i + l +1][j+1] == piece){
+                                            if (PIECE >= length) {
+                                                return true;
+                                            }
+                                    }
+                                }
+
+                                else if (i + l == board.length-1) {
+                                    if (board[i + l - 1][j - l - 1] == piece && PIECE >= length) {
+                                        return true;
+
+                                    } else if (I > 0 && PIECE >= length) {
+                                        return true;
+                                    }
+                                }
+
+                                else if (board[i + l + 1][j - l - 1] == piece) {
+                                    PIECE++;
+
+                                } else if (board[i + l + 1][j - l - 1] != piece) {
+                                    if (PIECE >= length) {
+                                        if (board[i + l][j - l] == piece) {
+                                            if (board[i + l - 1][j - l - 1] == piece) {
+                                                return true;
+                                            } else if (board[i + l - 1][j + l + 1] == piece) {
+                                                return true;
+                                            } else if (I > 0) {
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+
                 }
             }
         }
         return false;
     }
-
 
     /**
      * hint function lets the user decide where to put their piece next to determine if the opponent will win

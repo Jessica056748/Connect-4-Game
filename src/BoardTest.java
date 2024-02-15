@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Holds a helper deep copy and example tests of deep copy
  * @author Jessica Truong, Jonathan Hudson
  * @email jessica.truong1@ucalgary.ca, jwhudson@ucalgary.ca
+ * February 2 2024, Tutorial 15
  * @version 1.0
  */
 public class BoardTest {
@@ -23,8 +24,9 @@ public class BoardTest {
         }
         return copy;
     }
-//
+
     @Test
+    //uneven sizing of board (vertically)
     public void testcreateBoardRow() {
         int[][] expected = new int[5][4];
         int[][] actual = Board.createBoard(5,4);
@@ -44,9 +46,10 @@ public class BoardTest {
         assertArrayEquals(expected,actual);
     }
     @Test
+    //uneven sizing of board (horizontally)
     public void testcreateBoardColumn() {
-        int[][] expected = new int[3][6];
-        int[][] actual = Board.createBoard(3,3);
+        int[][] expected = new int[3][8];
+        int[][] actual = Board.createBoard(3,8);
         assertArrayEquals(expected, actual);
     }
     @Test
@@ -64,8 +67,9 @@ public class BoardTest {
         assertEquals(expected, actual);
     }
     @Test
+    //uneven sizing of board vertically
     public void testrowCount2() {
-        int [][] arr = new int[4][3];
+        int [][] arr = new int[4][8];
         int expected = 4;
         int actual = Board.rowCount(arr);
         assertEquals(expected, actual);
@@ -94,7 +98,7 @@ public class BoardTest {
     }
     @Test
     public void testcolumnCountMaximum() {
-        int [][] arr = new int[8][8];
+        int [][] arr = new int[3][8];
         int expected = 8;
         int actual = Board.columnCount(arr);
         assertEquals(expected, actual);
@@ -107,7 +111,16 @@ public class BoardTest {
         assertEquals(expected, actual);
     }
     @Test
+    //uneven sizing of board horizontal
     public void testcolumnCount2() {
+        int [][] arr = new int[6][5];
+        int expected = 5;
+        int actual = Board.columnCount(arr);
+        assertEquals(expected, actual);
+    }
+    @Test
+    //uneven sizing of board vertical
+    public void testcolumnCount3() {
         int [][] arr = new int[6][5];
         int expected = 5;
         int actual = Board.columnCount(arr);
@@ -115,6 +128,7 @@ public class BoardTest {
     }
 
     @Test
+    //testing a square board
     public void valid1() {
         int [][] arr = new int[6][6];
         boolean expected = true;
@@ -122,24 +136,25 @@ public class BoardTest {
         assertEquals(expected, actual);
     }
     @Test
+    //testing maximum
     public void valid2OutOfBoundRow() {
-        int [][] arr = new int[5][7];
+        int [][] arr = new int[5][8];
         boolean expected = false;
         boolean actual = Board.valid(arr,0,9);
         assertEquals(expected, actual);
     }
     @Test
-    public void valid3NegativeRow() {
+    public void validminimumRow() {
         int [][] arr = new int[7][3];
         boolean expected = false;
-        boolean actual = Board.valid(arr,-1,8);
+        boolean actual = Board.valid(arr,4,4);
         assertEquals(expected, actual);
     }
     @Test
-    public void valid4NegativeColumn() {
+    public void valid4outOfBoundRow() {
         int [][] arr = new int[7][3];
         boolean expected = false;
-        boolean actual = Board.valid(arr,0,-1);
+        boolean actual = Board.valid(arr,9,0);
         assertEquals(expected, actual);
     }
     @Test
@@ -392,18 +407,20 @@ public class BoardTest {
     }
 
     @Test
-    public void winInBackslash(){
-        int [][] arr = {{0,2,1,0,0},
-                        {0,1,2,1,2},
-                        {1,1,1,2,1},
+    // Testing when L has the shorter side to the upper left
+    public void winInBackslash1(){
+        int [][] arr = {{0,2,2,0,0},
+                        {0,1,2,0,2},
+                        {1,0,1,2,1},
                         {2,1,2,1,1},
                         {2,1,2,1,1},
                         {2,1,2,1,1}};
-        boolean expected = false;
-        boolean actual = Board.winInDiagonalBackslash(arr,2,3);
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
         assertEquals(expected,actual);
     }
     @Test
+    // Testing when L has the shorter side to the upper right
     public void winInBackslash2(){
         int [][] arr = {{0,1,0,0,0},
                         {1,2,2,0,2},
@@ -414,35 +431,41 @@ public class BoardTest {
         assertEquals(expected,actual);
     }
     @Test
+    // Testing when L has the shorter side to the lower left in the middle
+
     public void winInBackslash3(){
-        int [][] arr = {{0,0,0,0,0},
-                        {0,1,2,0,2},
-                        {1,2,1,2,2},
-                        {2,1,2,1,1}};
+        int [][] arr = {{0,2,0,0,2,0,0},
+                        {1,2,2,1,0,0,2},
+                        {2,1,1,2,1,0,1},
+                        {2,1,2,2,1,0,1}};
         boolean expected = true;
-        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        boolean actual = Board.winInDiagonalBackslash(arr,2,3);
         assertEquals(expected,actual);
     }
     @Test
+    // Testing when L has the shorter side to the lower right
     public void winInBackslash4(){
-        int [][] arr = {{1,2,0,0,0},
-                        {2,0,0,0,0},
-                        {1,2,1,2,2},
-                        {2,1,2,1,1},
-                        {2,1,2,2,1},
-                        {2,1,2,1,2},
-                        {2,1,2,1,1}};
-        boolean expected = false;
-        boolean actual = Board.winInDiagonalBackslash(arr,1,3);
+        int [][] arr = {{0,2,0,0,0,0},
+                        {0,0,0,0,0,0},
+                        {0,1,2,1,2,1},
+                        {2,2,1,2,1,1},
+                        {2,1,2,1,1,0},
+                        {2,2,1,2,1,0},
+                        {2,1,1,1,1,0}};
+
+        boolean expected = true;
+        boolean actual = Board.winInDiagonalBackslash(arr,1,4);
         assertEquals(expected,actual);
     }
     @Test
+    //Testing for L touching the sides
+    //prblem when i put piece 2????
     public void winInBackslash5(){
-        int [][] arr = {{1,0,1,0,0,0},
-                        {0,1,2,1,2,0},
-                        {1,2,1,2,2,0},
-                        {2,1,2,1,1,0},
-                        {2,1,2,1,1,0}};
+        int [][] arr = {{1,0,0,2,0,0,0},
+                        {0,1,2,1,2,0,2},
+                        {1,0,1,2,2,2,2},
+                        {2,1,2,1,1,0,2},
+                        {0,0,0,0,2,0,1}};
         boolean expected = true;
         boolean actual = Board.winInDiagonalBackslash(arr,1,3);
         assertEquals(expected,actual);
@@ -465,7 +488,7 @@ public class BoardTest {
         int [][] arr = {{0,0,1,0},
                         {0,0,2,1},
                         {2,2,1,0},
-                        {1,1,2,2}};
+                        {0,1,2,2}};
         boolean expected = true;
         boolean actual = Board.winInDiagonalForwardSlash(arr,1,3);
         assertEquals(expected,actual);
