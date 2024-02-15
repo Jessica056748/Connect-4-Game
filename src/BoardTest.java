@@ -485,10 +485,10 @@ public class BoardTest {
     }
     @Test
     public void wininforwardslash2(){
-        int [][] arr = {{0,0,1,0},
-                        {0,0,2,1},
-                        {2,2,1,0},
-                        {0,1,2,2}};
+        int [][] arr = {{0,0,0,0},
+                        {0,0,1,0},
+                        {2,1,0,1},
+                        {1,0,2,2}};
         boolean expected = true;
         boolean actual = Board.winInDiagonalForwardSlash(arr,1,3);
         assertEquals(expected,actual);

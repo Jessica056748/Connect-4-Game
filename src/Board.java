@@ -443,9 +443,6 @@ public class Board {
                     else if (i == board.length - 1) {
                         if (j == 0 || j == board[0].length - 1) {
                         }
-//                        else if (board[i -  1][j - 1] == piece) {
-//                            I++;
-//                        }
                     }
                     else if (j == board[0].length-1) {
                         if (board[i - 1][j - 1] == piece) {
@@ -473,7 +470,6 @@ public class Board {
                     if (i != board.length-1) {
                         if (j != 0) {
                             int[]shortestLength = {i,j};
-
                             //used to create the range for the for loop
                             int middlePoint;
                             int k = arr[0]/2;
@@ -488,7 +484,7 @@ public class Board {
                             if (i>=middlePoint) {
                             boardRange = i;
                             }
-                            else if(i<middlePoint) {
+                            else {
                                 boardRange = middlePoint;
                             }
 
@@ -519,7 +515,6 @@ public class Board {
                                         return true;
                                     }
                                 }
-
                                 else if (board[i + l + 1][j - l - 1] == piece) {
                                     PIECE++;
 
